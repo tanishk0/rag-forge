@@ -7,7 +7,7 @@ def ingest_markdown(path: str) -> list[dict]:
     cleaned = clean_text(text)
     chunks = chunk_text(cleaned)
 
-    return [
+    return cleaned, [
         {
             "content": chunk,
             "chunk_index": i,
