@@ -8,7 +8,7 @@ client = genai.Client(api_key=os.getenv("GEMINI_API_KEY"))
 
 
 def create_embedding(text: str) -> list[float]:
-    response = client.models.emdeb_content(
+    response = client.models.embed_content(
         model="gemini-embedding-2",
         contents=text,
         config={"output_dimensionality": 1536},

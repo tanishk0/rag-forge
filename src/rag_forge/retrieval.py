@@ -10,7 +10,7 @@ def retrieve(query: str, top_k: int =5):
 
     with Session(engine) as session:
         results = session.execute(
-            select(Chunk).order_by(Chunk.embedding.cosine_distance(query_embedding).limit(top_k))
+            select(Chunk).order_by(Chunk.embedding.cosine_distance(query_embedding)).limit(top_k)
         ).scalars().all()
 
         return [
