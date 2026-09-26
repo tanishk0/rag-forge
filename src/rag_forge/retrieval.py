@@ -13,4 +13,11 @@ def retrieve(query: str, top_k: int =5):
             select(Chunk).order_by(Chunk.embedding.cosine_distance(query_embedding).limit(top_k))
         ).scalars().all()
 
-        return results
+        return [
+            {
+                "content": chunk.content,
+                "metadata": chunk.meta,
+                "chunk_index": chunk.chunk_index,
+            }
+            for chunk in results
+        ]
