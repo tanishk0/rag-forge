@@ -4,6 +4,7 @@ from dotenv import load_dotenv
 from .models import Base
 from .models import Document, Chunk
 from sqlalchemy.orm import Session
+from .embedding import create_embedding
 
 load_dotenv()
 
@@ -35,12 +36,14 @@ def save_document(source: str, content: str, chunks: list[dict]):
         session.flush() #generates  document.id
 
         for chunk in chunks: 
+            embedding = create_embedding(chunk["content"])
             session.add(
                 Chunk(
                     document_id = document.id,
                     content=chunk["content"],
                     chunk_index=chunk["chunk_index"],
-                    meta={"source": chunk["source"]}
+                    meta={"source": chunk["source"]},
+                    embedding=embedding,
                 )
             )
 
